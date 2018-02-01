@@ -15,9 +15,9 @@ class Database:
         self.cursor.close()
         self.connection.close()
 
-    def create_db(filename):
-        con = sqlite3.connect("database.db")
-        cur = con.cursor()
+    def create_db(self, filename):
+        self.connection = sqlite3.connect(filename)
+        self.cursor = self.connection.cursor()
         sql = """
             CREATE TABLE users(
                 id_user INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,15 +26,14 @@ class Database:
                 first_name TEXT,
                 last_name TEXT);
             """
-        print(sql)
         try:
-            cur.executescript(sql)
+            self.cursor.executescript(sql)
         except sqlite3.DatabaseError as err:
             print("Ошибка: ", err)
         else:
-            print("Запрос успешно выполнен")
-        cur.close()
-        con.close()
+            print("База данных успешно создана")
+        self.cursor.close()
+        self.connection.close()
 
     def password_hash(self, password):
         hash = hashlib.sha256(bytearray(password, 'utf-8'))
@@ -52,12 +51,22 @@ class Database:
         except sqlite3.DatabaseError as err:
             print("Ошибка: ", err)
         else:
-            print("Запрос выполнен успешно")
+            print("Пользователь добавлен")
             self.connection.commit()
 
     def get_users_data(self):
         sql = "SELECT * FROM users;"
         self.cursor.execute(sql)
-        for user_data in self.cursor:
-            print(user_data)
+        return self.cursor.fetchall()
+
+    def get_user_data_login(self, login):
+        sql = "SELECT * FROM users WHERE login='%s'" % login
+        print(sql)
+        self.cursor.execute(sql)
+        user_data = self.cursor.fetchone()
+        return user_data
+
+    def get_user_data_condition(self, condition):
+        pass
+
 
