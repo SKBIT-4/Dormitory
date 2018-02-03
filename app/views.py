@@ -1,11 +1,22 @@
 from flask import render_template # импорт шаблонов
 from flask import request #импорт flask.request, иначе получим ошибку nameerror name 'request' is not defined flask
 from app import app
+import database
 
 @app.route('/')
-@app.route('/base')
+@app.route('/index')
 def base():
-    return render_template('base.html')
+    db = database.Database()
+    db.open("dormitory.db")
+    users_data = db.get_users_data()
+    names = ['id', 'login', 'password_hash', 'first_name', 'last_name']
+    users = list()
+    for item in users_data:
+        user = dict(zip(names, item))
+        users.append(user)
+    print(users)
+    db.close()
+    return render_template('index.html', users=users)
     
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
