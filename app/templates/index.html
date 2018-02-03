@@ -1,0 +1,18 @@
+{% extends "base.html"%}
+{% block content %}
+
+<h5>Список пользователей:</h5>
+{% for user in users %}
+    <div class="panel panel-default">
+      <div class="panel-body">
+          <b>ID: </b>{{ user.id }} <br>
+          <b>Логин: </b> {{ user.login }} <br>
+          <b>Хэш пароля (SHA-256): </b> {{user.password_hash }} <br>
+          <b>Имя: </b> {{ user.first_name }} <br>
+          <b>Фамилия: </b> {{ user.last_name }}
+
+      </div>
+    </div>
+{% endfor %}
+
+{% endblock %}
