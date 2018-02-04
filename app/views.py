@@ -1,7 +1,7 @@
 from flask import render_template # импорт шаблонов
 from flask import request #импорт flask.request, иначе получим ошибку name error name 'request' is not defined flask
 from app import app
-import database
+import database #Импорт базы данных
 
 @app.route('/')
 @app.route('/index')
