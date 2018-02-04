@@ -1,18 +1,27 @@
-{% extends "base.html"%}
+{% extends "base.html" %}
+
 {% block content %}
-
-<h5>Список пользователей:</h5>
-{% for user in users %}
-    <div class="panel panel-default">
-      <div class="panel-body">
-          <b>ID: </b>{{ user.id }} <br>
-          <b>Логин: </b> {{ user.login }} <br>
-          <b>Хэш пароля (SHA-256): </b> {{user.password_hash }} <br>
-          <b>Имя: </b> {{ user.first_name }} <br>
-          <b>Фамилия: </b> {{ user.last_name }}
-
-      </div>
-    </div>
-{% endfor %}
+<div class="jumbotron">
+	<div class="container">
+		<h1 class="text-center"> Общежития РГАТУ</h1>
+	</div>
+</div>
+	<div class="row">
+		<div class="col-md-5">
+			<h2 class="text-center">Общежитие №1</h2>
+			<p>Наименование общежития: учебно-бытовой корпус.</p>
+			<p>Полный адрес общежития: 152931, Ярославская область,  г. Рыбинск, ул. Румянцевская, д. 60</p>
+			<p>Заведующий общежитием: Поймалова Оксана Валерьевна, тел: 22-21-25</p>
+			<img src="static/1.jpg" class="img-thumbnail">
+		</div>
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-5">
+			<h2 class="text-center">Общежитие №2</h2>
+			<p>Наименование общежития: учебно-бытовой корпус.</p>
+			<p>Полный адрес общежития: 152931, Ярославская область,  г. Рыбинск, ул. Свободы, д. 25</p>
+			<p>Заведующий общежитием: Зотов Юрий Владимирович, тел: 22-28-04</p>
+		</div>
+	</div>
 
 {% endblock %}
