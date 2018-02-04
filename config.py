@@ -1,4 +1,2 @@
-# config.py
- 
-# Enable Flask's debugging features. Should be False in production
-#DEBUG = True
+CSRF_ENABLED = True
+SECRET_KEY = 'you-will-never-guess'

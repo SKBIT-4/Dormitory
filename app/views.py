@@ -2,6 +2,8 @@ from flask import render_template # импорт шаблонов
 from flask import request #импорт flask.request, иначе получим ошибку name error name 'request' is not defined flask
 from app import app
 import database #Импорт базы данных
+#from forms import LoginForm
+
 
 @app.route('/')
 @app.route('/index')
@@ -17,7 +19,19 @@ def base():
     print(users)
     db.close()
     return render_template('index.html', users=users)
-    
+
+@app.route('/registry', methods = ['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        u = User(form.login.data, sha-256((form.password.data).encode('UTF-8')).hexdigest())
+        db_session.add(u)
+        db_session.commit()
+        return redirect('/index')
+    return render_template('registry.html',
+        title = 'Registration',
+        form = form)
+
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
     error = None
@@ -31,3 +45,5 @@ def sign_in():
             flash('You were logged in')
             return redirect(url_for('show_entries')) #Перенаправление на страницу при удачном входе пользователя
     return render_template('sign_in.html', error=error)
+    
+
