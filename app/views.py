@@ -1,14 +1,17 @@
 from flask import render_template # импорт шаблонов
-from flask import request #импорт flask.request, иначе получим ошибку name error name 'request' is not defined flask
+from flask import request #импорт flask.request, иначе получим ошибку nameerror name 'request' is not defined flask
+from app.forms import SignInForm, SignUpForm
 from app import app
-import database #Импорт базы данных
-#from forms import LoginForm
-#from flask_wtf import LoginForm
-
+import database
+#from flask_wtf import FlaskForm
 
 @app.route('/')
 @app.route('/index')
 def base():
+    return render_template('index.html')
+
+@app.route('/users')
+def show_users():
     db = database.Database()
     db.open("dormitory.db")
     users_data = db.get_users_data()
@@ -19,32 +22,34 @@ def base():
         users.append(user)
     print(users)
     db.close()
-    return render_template('index.html', users=users)
-
-@app.route('/registry', methods = ['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        u = User(form.login.data, sha-256((form.password.data).encode('UTF-8')).hexdigest())
-        db_session.add(u)
-        db_session.commit()
-        return redirect('/index')
-    return render_template('registry.html',
-        title = 'Registration',
-        form = form)
-
+    return render_template('users.html', users=users)
+    
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
     error = None
     if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:
-            error = 'Invalid username'
-        elif request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid password'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('show_entries')) #Перенаправление на страницу при удачном входе пользователя
-    return render_template('sign_in.html', error=error)
-    
+        form = request.form
+        print(request.form)
 
+
+    return render_template('sign_in.html', error=error, form=SignInForm())
+
+@app.route('/registry', methods=['GET', 'POST'])
+def registry():
+    error = None
+    if request.method == 'POST':
+        form = request.form
+        print(form)
+        login = form['login']
+        password = form['password']
+        db = database.Database()
+        db.open("dormitory.db")
+        user = db.get_user_data_login(login)
+        if user == None:
+            print('Пользователь добавлен')
+            db.add_user(login, password, "Pavel", 'Katskov')
+        else:
+            print('Логин уже занят')
+        print(user)
+        db.close()
+    return  render_template('registry.html', error=error, form=SignUpForm())
