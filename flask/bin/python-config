@@ -1,4 +1,4 @@
-#!/home/dmitry/dev/basicServer/flask/bin/python
+#!/home/dmitry/dev/Dormitory/flask/bin/python
 
 import sys
 import getopt

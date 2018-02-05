@@ -3,6 +3,7 @@ from flask import request #импорт flask.request, иначе получим
 from app import app
 import database #Импорт базы данных
 #from forms import LoginForm
+#from flask_wtf import LoginForm
 
 
 @app.route('/')
