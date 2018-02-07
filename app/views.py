@@ -41,12 +41,15 @@ def registry():
         print(form)
         login = form['login']
         password = form['password']
+        f_name = form['first_name']
+        l_name = form['last_name']
+        role = form['role']
         db = database.Database()
         db.open("dormitory.db")
         user = db.get_user_data_login(login)
         if user == None:
             print('Пользователь добавлен')
-            db.add_user(login, password, "Pavel", 'Katskov')
+            db.add_user(login, password, f_name, l_name, role)
         else:
             print('Логин уже занят')
         print(user)

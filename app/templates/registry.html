@@ -15,6 +15,18 @@
 			<label for="password" class="control-label ">Пароль:</label>
 			{{ form.password(size=32, type="password", class="form-control", id="password", placeholder="Введите пароль") }}
 		</div>
+		<div class="form-group">
+			<label for="first_name" class="control-label ">Имя:</label>
+			{{ form.first_name(size=32, class="form-control", id="first_name", placeholder="Введите имя") }}
+		</div>
+		<div class="form-group">
+			<label for="last_name" class="control-label ">Фамилия:</label>
+			{{ form.last_name(size=32, class="form-control", id="last_name", placeholder="Введите фамилию") }}
+		</div>
+		<div class="form-group">
+			<label for="last_name" class="control-label ">Должность:</label>
+			{{ form.role(size=32, class="form-control", id="last_name", placeholder="Введите должность") }}
+		</div>
 		<br>
 		<div class="form-group">
 			{{ form.submit(class="btn btn-primary") }}

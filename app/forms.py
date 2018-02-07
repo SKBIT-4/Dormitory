@@ -10,4 +10,7 @@ class SignInForm(FlaskForm):
 class SignUpForm(FlaskForm):
     login = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
+    first_name = StringField('first_name', validators=[DataRequired()])
+    last_name = StringField('last_name', validators=[DataRequired()])
+    role = StringField('role', validators=[DataRequired()])
     submit = SubmitField('Добавить')
