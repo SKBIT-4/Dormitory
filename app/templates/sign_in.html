@@ -16,6 +16,7 @@
 				{{ form.password(size=32, type="password", class="form-control", id="password", placeholder="Введите пароль") }}
 			</div>
 			<br>
+			{{ form.remember_me() }} {{ form.remember_me.label }}
 			<div class="form-group">
 				{{ form.submit(class="btn btn-primary") }}
 			</div>

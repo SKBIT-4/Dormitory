@@ -26,6 +26,7 @@ def show_users():
     
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
+    form = SignInForm()
     error = None
     if request.method == 'POST':
         form = request.form
