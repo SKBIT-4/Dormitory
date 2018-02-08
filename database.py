@@ -39,13 +39,13 @@ class Database:
         hash = hashlib.sha256(bytearray(password, 'utf-8'))
         return hash.hexdigest()
 
-    def add_user(self, login, password, first_name, last_name):
+    def add_user(self, login, password, first_name, last_name, role):
         password = self.password_hash(password)
         sql = """
-        INSERT INTO users (login, password_hash, first_name, last_name)
-        VALUES (?, ?, ?, ?);
+        INSERT INTO users (login, password_hash, first_name, last_name, role)
+        VALUES (?, ?, ?, ?, ?);
         """
-        param = (login, password, first_name, last_name)
+        param = (login, password, first_name, last_name, role)
         try:
             self.cursor.execute(sql, param)
         except sqlite3.DatabaseError as err:
@@ -66,7 +66,25 @@ class Database:
         user_data = self.cursor.fetchone()
         return user_data
 
+    def delete_user(self, login):
+        sql = 'DELETE FROM users WHERE login=%s' % login
+        try:
+            self.cursor.execute(sql)
+        except sqlite3.DatabaseError as err:
+            print('Error: ', err)
+        else:
+            print('Пользователь успешно удален')
+
     def get_user_data_condition(self, condition):
         pass
+
+    def add_column(self, table, column_info):
+        sql = "ALTER TABLE %s ADD COLUMN %s" % (table, column_info)
+        try:
+            self.cursor.execute(sql)
+        except sqlite3.DaabaseError as err:
+            print('Ошибка: ', err)
+        else:
+            print('Таблица успешно изменена')
 
 

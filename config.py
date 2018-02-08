@@ -1,2 +1,6 @@
-CSRF_ENABLED = True
-SECRET_KEY = 'you-will-never-guess'
+# config.py
+
+import os
+
+class Config(object):
+    SECRET_KEY = 'dormitory_rsatu'

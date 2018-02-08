@@ -3,7 +3,6 @@ from flask import request #импорт flask.request, иначе получим
 from app.forms import SignInForm, SignUpForm
 from app import app
 import database
-#from flask_wtf import FlaskForm
 
 @app.route('/')
 @app.route('/index')
@@ -26,7 +25,6 @@ def show_users():
     
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
-    form = SignInForm()
     error = None
     if request.method == 'POST':
         form = request.form
@@ -43,12 +41,15 @@ def registry():
         print(form)
         login = form['login']
         password = form['password']
+        f_name = form['first_name']
+        l_name = form['last_name']
+        role = form['role']
         db = database.Database()
         db.open("dormitory.db")
         user = db.get_user_data_login(login)
         if user == None:
             print('Пользователь добавлен')
-            db.add_user(login, password, "Pavel", 'Katskov')
+            db.add_user(login, password, f_name, l_name, role)
         else:
             print('Логин уже занят')
         print(user)
