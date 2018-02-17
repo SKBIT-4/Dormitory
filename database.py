@@ -1,7 +1,14 @@
 import sqlite3
 import hashlib
 
+
 class Database:
+    SIGN_IN_ERROR = 0
+    SIGN_IN_ACCEPTED = 1
+    SIGN_IN_INCORRECT_PASSWORD = 2
+    SIGN_IN_INCORRECT_LOGIN = 3
+
+
 
     def __init__(self):
         self.connection = None
@@ -39,6 +46,19 @@ class Database:
         hash = hashlib.sha256(bytearray(password, 'utf-8'))
         return hash.hexdigest()
 
+    def check_user_password(self, login, password):
+        try:
+            user = self.get_user_data_login(login)
+        except:
+            return Database.SIGN_IN_ERROR
+        if user == None:
+            return Database.SIGN_IN_INCORRECT_LOGIN
+        password_hash = self.password_hash(password)
+        if user[2] == password_hash:
+            return Database.SIGN_IN_ACCEPTED
+        else:
+            return Database.SIGN_IN_INCORRECT_PASSWORD
+
     def add_user(self, login, password, first_name, last_name, role):
         password = self.password_hash(password)
         sql = """
@@ -53,6 +73,7 @@ class Database:
         else:
             print("Пользователь добавлен")
             self.connection.commit()
+
 
     def get_users_data(self):
         sql = "SELECT * FROM users;"
