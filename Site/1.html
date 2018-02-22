@@ -3,9 +3,6 @@
 <head>
 	<title>1 этаж</title>
     <meta charset="utf-8" />
-	<link rel="stylesheet" type="text/css" href="static/libs/bootstrap-3.3.7/css/bootstrap.css">
-	<script src="static/libs/jquery/jquery-3.3.1.js"></script>
-	<script src="static/libs/bootstrap-3.3.7/js/bootstrap.js"></script>	
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 	<script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/B9334049-0709-0D40-A297-9319FDA07851/main.js" charset="UTF-8"></script><script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <style>
@@ -40,8 +37,7 @@
       var map = new L.Map('map', {maxBounds: bounds});
       L.tileLayer(image + '/{z}-{x}-{y}.jpg', {
         maxZoom: maxLevel, minZoom: minLevel, opacity: 1.0, zIndex: 1, noWrap: true,
-        bounds: bounds
-		  }).addTo(map);		  
+        bounds: bounds}).addTo(map);		  
       var zoom = map.getBoundsZoom(bounds);
       var center = new L.latLng(centerLat, centerLon);
 	  map.setView(center, zoom);	  
