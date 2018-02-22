@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>1 этаж</title>
+    <meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="static/libs/bootstrap-3.3.7/css/bootstrap.css">
+	<script src="static/libs/jquery/jquery-3.3.1.js"></script>
+	<script src="static/libs/bootstrap-3.3.7/js/bootstrap.js"></script>	
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+	<script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/B9334049-0709-0D40-A297-9319FDA07851/main.js" charset="UTF-8"></script><script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <style>
+        html, body, #map
+        {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+	<div id="map" style="background-color:White;"/>   
+    <script>	
+      var image = '1 этаж';
+      var width = 4561;
+      var height = 1419;
+      var maxLevel = 5;
+      var minLevel = 3;
+      var orgLevel = 5;
+      var tileWidth = 256 * Math.pow(2, orgLevel);
+      var radius = tileWidth / 2 / Math.PI;
+      var rx = width - tileWidth / 2;
+      var ry = -height + tileWidth / 2;
+      var west = -180;
+      var east = (180 / Math.PI) * (rx / radius);
+      var north = 85.05;
+      var south = (360 / Math.PI) * (Math.atan(Math.exp(ry / radius)) - (Math.PI / 4));
+      var rc = (tileWidth / 2 + ry) / 2;
+      var centerLat = (360 / Math.PI) * (Math.atan(Math.exp(rc / radius)) - (Math.PI / 4));
+      var centerLon = (west + east) / 2;
+      var bounds = [[south, west], [north, east]];
+      var map = new L.Map('map', {maxBounds: bounds});
+      L.tileLayer(image + '/{z}-{x}-{y}.jpg', {
+        maxZoom: maxLevel, minZoom: minLevel, opacity: 1.0, zIndex: 1, noWrap: true,
+        bounds: bounds
+		  }).addTo(map);		  
+      var zoom = map.getBoundsZoom(bounds);
+      var center = new L.latLng(centerLat, centerLon);
+	  map.setView(center, zoom);	  
+	</script>
+	
+</body>
+</html>
