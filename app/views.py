@@ -4,10 +4,14 @@ from app.forms import SignInForm, SignUpForm
 from app import app
 import database
 
+
+
 @app.route('/')
 @app.route('/index')
 def base():
     return render_template('index.html')
+
+
 
 @app.route('/users')
 def show_users():
@@ -23,6 +27,8 @@ def show_users():
     db.close()
     return render_template('users.html', users=users)
     
+
+
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
     error = None
@@ -32,6 +38,8 @@ def sign_in():
 
 
     return render_template('sign_in.html', error=error, form=SignInForm())
+
+
 
 @app.route('/registry', methods=['GET', 'POST'])
 def registry():
